@@ -1,40 +1,55 @@
 import speech_recognition
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Controller
+import subprocess
 import sys
-import pyaudio
-import pyttsx3
 
 recognizer = speech_recognition.Recognizer()
 keyboard = Controller()
 
-while True:
-    try:
+print("Running Large")
 
-        with speech_recognition.Microphone() as mic:
-            recognizer.adjust_for_ambient_noise(mic, duration=0.2)
+# Adjust microphone sensitivity once outside the loop
+with speech_recognition.Microphone() as mic:
+    recognizer.adjust_for_ambient_noise(mic, duration=0.5)
+    print("Microphone calibrated. Listening for commands...")
+
+    while True:
+        try:
             audio = recognizer.listen(mic)
+            text = recognizer.recognize_google(audio).lower()
+            print(text)
 
-            text = recognizer.recognize_google(audio)
-            text = text.lower()
-            print (text)
-            
-            if text == "acknowledge" or text == "acknowledge landing clearance" or text == "acknowledge go around" or text == "acknowledge taxi clearance" or text == "announce position" or text == "acknowledge taxi":
+            if text in ["acknowledge", "acknowledge landing clearance", "acknowledge go around",
+                        "acknowledge taxi clearance", "acknowledge taxi", "acknowledge radar contact",
+                        "tune atis", "request pushback", "request pushback stop", "acknowledge takeoff clearance",
+                        "acknowledge frequency change"]:
                 keyboard.press('1')
                 keyboard.release('1')
-            elif text == "say again" or text == "announce on final" or text == "request directions to the airport" or text == "announce taxi":
+            elif text in ["say again", "request directions to the airport", "announce taxi", 
+                          "request fuel supply", "request fuel supply end", "request push back steer to the left"]:
                 keyboard.press('2')
                 keyboard.release('2')
-            elif text == "announce on upwind leg" or text == "announce taxi to parking":
+            elif text in ["announce taxi to parking", "request power supply", "request power supply end", "request push back steer to the right", "request pushback push straight", "request push back to push straight"]:
                 keyboard.press('3')
                 keyboard.release('3')
-            elif text == "announce on upwind leg":
+            elif text in ["request passenger boarding start", "request passenger boarding stop"]:
                 keyboard.press('4')
                 keyboard.release('4')
-            elif text == "exit" or text == "quit":
+            elif text in ["request baggage service", "request baggage service end", "request baggage service stop"]:
+                keyboard.press('5')
+                keyboard.release('5')
+            elif text in ["request catering service", "request catering service end", "request catering service stop"]:
+                keyboard.press('6')
+                keyboard.release('6')
+            elif text in ["exit", "quit"]:
+                print("Exiting...")
+                sys.exit()
+            elif text == "small":
+                print("Launching SmallAirport.py...")
+                subprocess.run(["python3", "SmallAirport.py"])
                 sys.exit()
 
+        except speech_recognition.UnknownValueError:
 
-    except speech_recognition.UnknownValueError:
-
-        recognizer = speech_recognition.Recognizer()
+            recognizer = speech_recognition.Recognizer()
         continue
