@@ -22,14 +22,17 @@ with speech_recognition.Microphone() as mic:
             if text in ["acknowledge", "acknowledge landing clearance", "acknowledge go around",
                         "acknowledge taxi clearance", "acknowledge taxi", "acknowledge radar contact",
                         "tune atis", "request pushback", "request pushback stop", "acknowledge takeoff clearance",
-                        "acknowledge frequency change"]:
+                        "acknowledge frequency change", "acknowledge pattern entry instructions", "acknowledge pattern entry instruction",
+                        "acknowledge ground hand off"]:
                 keyboard.press('1')
                 keyboard.release('1')
             elif text in ["say again", "request directions to the airport", "announce taxi", 
-                          "request fuel supply", "request fuel supply end", "request push back steer to the left"]:
+                          "request fuel supply", "request fuel supply end", "request push back steer to the left",
+                          "request touch and go"]:
                 keyboard.press('2')
                 keyboard.release('2')
-            elif text in ["announce taxi to parking", "request power supply", "request power supply end", "request push back steer to the right", "request pushback push straight", "request push back to push straight"]:
+            elif text in ["announce taxi to parking", "request power supply", "request power supply end", "request push back steer to the right", 
+                          "request pushback push straight", "request push back to push straight", "request full stop landing", "request taxi to parking"]:
                 keyboard.press('3')
                 keyboard.release('3')
             elif text in ["request passenger boarding start", "request passenger boarding stop"]:
