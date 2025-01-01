@@ -23,7 +23,7 @@ with speech_recognition.Microphone() as mic:
                         "acknowledge taxi clearance", "acknowledge taxi", "acknowledge radar contact",
                         "tune atis", "request pushback", "request pushback stop", "acknowledge takeoff clearance",
                         "acknowledge frequency change", "acknowledge pattern entry instructions", "acknowledge pattern entry instruction",
-                        "acknowledge ground hand off"]:
+                        "acknowledge ground hand off", "request flight following", "acknowledge squawk code"]:
                 keyboard.press('1')
                 keyboard.release('1')
             elif text in ["say again", "request directions to the airport", "announce taxi", 
@@ -56,3 +56,4 @@ with speech_recognition.Microphone() as mic:
 
             recognizer = speech_recognition.Recognizer()
         continue
+    
